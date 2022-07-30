@@ -1,0 +1,27 @@
+{
+  "name": "discord-bot-stats",
+  "version": "1.0.0",
+  "description": "A Node.js package to have statistics graphs for your Discord Bot",
+  "main": "srx/index.ts",
+  "scripts": {
+    "test": "tsc --noEmit",
+    "compile": "tsc",
+    "watch": "tsc --watch",
+    "lint": "eslint . --ext .ts",
+    "prettier": "prettier --check **/*.ts",
+		"check": "yarn lint && yarn prettier && yarn test",
+		"format": "prettier --write **/*.ts"
+  },
+  "repository": "https://github.com/warix8/discord-bot-stats.git",
+  "author": "Warix <39554785+warix8@users.noreply.github.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.6.2",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "eslint": "^8.20.0",
+    "eslint-config-prettier": "^8.5.0",
+		"prettier": "^2.7.1",
+    "typescript": "^4.7.4"
+  }
+}

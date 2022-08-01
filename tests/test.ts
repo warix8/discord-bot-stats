@@ -17,19 +17,25 @@ const statsManager = new MongoStatsManager({
 	enabledStats: {
 		cpu: true,
 		ram: true,
-		servers: true
+		servers: true,
+		commands: true
 	}
 });
 
 // When the client is ready, run this code (only once)
 client.once("ready", () => {
 	console.log("Ready!");
-	statsManager.start(() => {
+	statsManager.start(async () => {
+		const cmds = new Map().set("ping", Math.floor(Math.random() * 12)).set("stats", Math.floor(Math.random() * 12)).set("lmao", Math.floor(Math.random() * 12)).set("trala", Math.floor(Math.random() * 12)).set("xxx", Math.floor(Math.random() * 12)).set("pitttng", Math.floor(Math.random() * 12));
 		return {
-			cpu: process.cpuUsage().user,
-			ram: process.memoryUsage().heapUsed / 1024 / 1024,
-			servers: client.guilds.cache.size,
-			users: client.users.cache.size
+			timestamp: Date.now(),
+			stats: {
+				cpu: 0.1,
+				ram: Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100,
+				servers: client.guilds.cache.size,
+				users: client.users.cache.size,
+				commands: cmds
+			}
 		};
 	});
 });
@@ -38,7 +44,7 @@ client.on("messageCreate", async message => {
 	if (message.author.bot) return;
 	console.log(message.content);
 	if (message.content.startsWith("+stats")) {
-		const graph = await new Graph(statsManager).generate("ram");
+		const graph = await new Graph(statsManager).generate("commands");
 		await message.channel.send({
 			files: [
 				{

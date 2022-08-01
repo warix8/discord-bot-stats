@@ -1,23 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { schedule } from "node-cron";
+import StatsModule, { GraphType } from "./StatsModule";
 
 export type PossibleStats = "cpu" | "ram" | "servers" | "users" | "commands" | "errors";
 
-interface EnabledStats {
-	cpu?: boolean;
-	ram?: boolean;
-	servers?: boolean;
-	users?: boolean;
-	commands?: boolean;
-	errors?: boolean;
-}
+type EnabledStats = {
+	[key in PossibleStats]?: boolean;
+};
 
-interface CommandInformation {
-	execution: number;
-	errors: number;
-}
-
-export interface Stats {
+/*export interface Stats {
 	timestamp?: number;
 	cpu?: number;
 	ram?: number;
@@ -25,6 +16,15 @@ export interface Stats {
 	users?: number;
 	commands?: Map<string, CommandInformation>;
 	errors?: number;
+}*/
+
+export type Stats = {
+	[key: string]: number | Map<string, unknown>;
+};
+
+export interface SavedStatsFormat {
+	timestamp: number;
+	stats: Stats;
 }
 
 export interface StatsManagerOptions {
@@ -33,8 +33,17 @@ export interface StatsManagerOptions {
 }
 
 interface StatsAcquisition {
-	(): Stats;
+	(): Promise<SavedStatsFormat>;
 }
+
+const defaultStatsModule: StatsModule[] = [
+	new StatsModule("cpu", { graphType: GraphType.LINE, dataType: "number" }),
+	new StatsModule("ram", { graphType: GraphType.LINE, dataType: "number" }),
+	new StatsModule("servers", { graphType: GraphType.LINE, dataType: "number" }),
+	new StatsModule("users", { graphType: GraphType.LINE, dataType: "number" }),
+	new StatsModule("commands", { graphType: GraphType.BAR, dataType: "map" }),
+	new StatsModule("errors", { graphType: GraphType.LINE, dataType: "number" })
+];
 
 /**
  * Manages the stats of your discord bot.
@@ -45,23 +54,65 @@ interface StatsAcquisition {
 export default abstract class {
 	saveInterval: number;
 	enabledStats: EnabledStats;
+	private _statsModules: StatsModule[];
 	constructor(options: StatsManagerOptions) {
 		this.saveInterval = options.saveInterval || 3_600_000;
 		this.enabledStats = options.enabledStats || {};
+		this._statsModules = [];
+		this._init();
+	}
+
+	_init() {
+		for (const module of defaultStatsModule) {
+			const status = this.enabledStats[module.name as PossibleStats];
+			if (status) this._statsModules.push(module);
+		}
+		console.log(`[StatsManager] Enabled stats: ${this._statsModules.map(m => m.name).join(", ")}`);
+	}
+
+	/*isModuleEnabled(name: string) {
+		return this.statsModules.some(m => m.name === name);
+	}*/
+
+	get statsModules(): StatsModule[] {
+		return this._statsModules;
+	}
+
+	findModule(name: string): StatsModule {
+		return this._statsModules.find(m => m.name === name);
 	}
 
 	async start(returnedStatsFunction: StatsAcquisition): Promise<void> {
-		schedule("0 * * * * *", async () => {
-			const returnedStats = returnedStatsFunction();
+		schedule("*/15 * * * * *", async () => {
+			const returnedStats = await returnedStatsFunction();
+
+			console.debug("Schedule");
 
 			if (isNaN(returnedStats?.timestamp)) returnedStats.timestamp = Date.now();
 
 			// Saving new Data
-			for (const [stat, status] of Object.entries(this.enabledStats) as [PossibleStats, boolean][]) {
+			/*for (const [stat, status] of Object.entries(this.enabledStats) as [PossibleStats, boolean][]) {
 				if (status && !returnedStats[stat])
 					throw new Error(`The stat ${stat} is enabled but not returned by the stats acquisition function.`);
+			}*/
+			for (const module of this._statsModules) {
+				const moduleStats = returnedStats.stats[module.name];
+				if (!moduleStats) {
+					throw new Error(
+						`The stats ${module.name} is enabled but not returned by the stats acquisition function.`
+					);
+				}
+				if (!module.validInputData(moduleStats)) {
+					throw new Error(
+						`The stats ${module.name} is provided but don't but not match the type ${module.dataType}.`
+					);
+				}
+				if (isNaN(returnedStats.timestamp)) {
+					throw new Error(`The timestamp ${returnedStats.timestamp} is not a valid timestamp.`);
+				}
 			}
 
+			console.debug("4");
 			await this.saveStats(returnedStats);
 
 			// Supress useless data
@@ -100,9 +151,9 @@ export default abstract class {
 		});
 	}
 
-	abstract saveStats(stats: Stats): Promise<void>;
+	abstract saveStats(stats: SavedStatsFormat): Promise<void>;
 
-	abstract getStats(): Promise<Stats[]>;
+	abstract getStats(): Promise<SavedStatsFormat[]>;
 
 	abstract deleteStats(timestamps: number[]): Promise<void>;
 }

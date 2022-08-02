@@ -5,7 +5,7 @@ import { GraphType, StatsModuleOptions } from "./types/types";
  * @class StatsModule
  * @description Manages a single stats.
  */
-export default class StatsModule {
+class StatsModule {
 	private _name: string;
 	private _graphType: GraphType;
 	private _dataType: "number" | "map";
@@ -63,3 +63,5 @@ export default class StatsModule {
 		} else return true;
 	}
 }
+
+export { StatsModule };

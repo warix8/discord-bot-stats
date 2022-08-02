@@ -1,4 +1,4 @@
-import StatsManager from "../src/StatsManager";
+import { StatsManager } from "../src/StatsManager";
 import mongoose from "mongoose";
 import { SavedStatsFormat, StatsManagerOptions } from "../src/types/types";
 

@@ -1,6 +1,6 @@
-module.exports.BaseGraph = require("./graphs/BaseGraph");
-module.exports.StatsManager = require("./StatsManager");
-module.exports.StatsModule = require("./StatsModule");
-module.exports.DoughnutGraph = require("./graphs/DoughnutGraph");
-module.exports.LineGraph = require("./graphs/LineGraph");
-module.exports.BarGraph = require("./graphs/BarGraph");
+export { GraphBase } from "./graphs/BaseGraph";
+export { StatsManager } from "./StatsManager";
+export { StatsModule } from "./StatsModule";
+export { DoughnutGraph } from "./graphs/DoughnutGraph";
+export { LineGraph } from "./graphs/LineGraph";
+export { BarGraph } from "./graphs/BarGraph";

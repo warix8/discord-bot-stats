@@ -1,18 +1,18 @@
 import { ChartConfiguration, ChartTypeRegistry } from "chart.js";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
-import GraphBase from "./BaseGraph";
-import StatsManager from "../StatsManager";
+import { GraphBase } from "./BaseGraph";
+import { StatsManager } from "../StatsManager";
 import { DoughnutStats, GraphType, DoughnutGraphOptions } from "../types/types";
 
 /** Class that generate Douhnout graph
  * @extends GraphBase
  */
-export default class DoughnutGraph extends GraphBase {
+class DoughnutGraph extends GraphBase {
 	fillColors: string[];
 	displayOthers: boolean;
 	/**
 	 * @param {StatsManager} statsmanager - Your StatsManager instance
-	 * @param {LineGraphOptions} options - options for the graph
+	 * @param {DoughnutGraphOptions} options - options for the graph
 	 * @param {string[]} [options.fillColors = ["#ED4245", "#57F287", "#FEE75C", "#EB459E", "#FFFFFF", "#7289DA"]] - Colors of the doughnut
 	 * @param {boolean} [options.displayOthers = true] - Display the category others in doughnut
 	 * @param {number} [options.height = 400] - The height of the graph
@@ -115,3 +115,5 @@ export default class DoughnutGraph extends GraphBase {
 		return image;
 	}
 }
+
+export { DoughnutGraph };

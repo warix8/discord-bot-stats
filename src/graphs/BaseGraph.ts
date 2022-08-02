@@ -1,12 +1,12 @@
 import { Chart } from "chart.js";
-import StatsManager from "../StatsManager";
-import StatsModule from "../StatsModule";
+import { StatsManager } from "../StatsManager";
+import { StatsModule } from "../StatsModule";
 import { GraphType, GraphOptions } from "../types/types";
 
 // type GraphType = "line" | "bar" | "doughnut";
 
 /** An abstract that should be extends to generate Graph  */
-export default abstract class GraphBase {
+abstract class GraphBase {
 	height: number;
 	width: number;
 	time: number;
@@ -86,3 +86,5 @@ export default abstract class GraphBase {
 	// eslint-disable-next-line no-unused-vars
 	abstract generateCanvas(data: unknown[]): Promise<Buffer>;
 }
+
+export { GraphBase };

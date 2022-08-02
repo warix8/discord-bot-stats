@@ -1,13 +1,13 @@
 import { ChartConfiguration, ChartTypeRegistry } from "chart.js";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
-import GraphBase from "./BaseGraph";
-import StatsManager from "../StatsManager";
+import { GraphBase } from "./BaseGraph";
+import { StatsManager } from "../StatsManager";
 import { LineGraphOptions, GraphType, LineStats } from "../types/types";
 
 /** The LineGraph class to generate linear graphics
  * @extends GraphBase
  */
-export default class LineGraph extends GraphBase {
+class LineGraph extends GraphBase {
 	lineColor: string;
 	fillColor: string;
 	dataSetName: string;
@@ -113,3 +113,5 @@ export default class LineGraph extends GraphBase {
 		return image;
 	}
 }
+
+export { LineGraph };

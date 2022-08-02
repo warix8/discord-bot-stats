@@ -4,7 +4,7 @@
 
 // Require the necessary discord.js classes
 import { Client, GatewayIntentBits } from "discord.js";
-import BarGraph from "../src/graphs/BarGraph";
+import { BarGraph } from "../src/graphs/BarGraph";
 import { token } from "./config.json";
 import MongoStatsManager from "./MongoStatsManager";
 

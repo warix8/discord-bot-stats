@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { schedule } from "node-cron";
-import StatsModule from "./StatsModule";
+import { StatsModule } from "./StatsModule";
 import {
 	GraphType,
 	EnabledStats,
@@ -24,7 +24,7 @@ const defaultStatsModule: StatsModule[] = [
  * @class StatsManager
  * @description Manages the stats of the bot.
  */
-export default abstract class StatsManager {
+abstract class StatsManager {
 	saveInterval: number;
 	enabledStats: EnabledStats;
 	private _statsModules: StatsModule[];
@@ -166,6 +166,8 @@ export default abstract class StatsManager {
 	 */
 	abstract deleteStats(timestamps: number[]): Promise<void>;
 }
+
+export { StatsManager };
 
 /*function AverageOfTwoStats(stats1: Stats, stats2: Stats) {
 	return {

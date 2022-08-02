@@ -395,10 +395,10 @@ chart.js@^3.8.2:
   resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-3.8.2.tgz#e3ebb88f7072780eec4183a788a990f4a58ba7a1"
   integrity sha512-7rqSlHWMUKFyBDOJvmFGW2lxULtcwaPLegDjX/Nu5j6QybY+GCiQkEY+6cqHw62S5tcwXMD8Y+H5OBGoR7d+ZQ==
 
-chartjs-adapter-luxon@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/chartjs-adapter-luxon/-/chartjs-adapter-luxon-1.1.0.tgz#0a0d9213db5de0ad3285fae896b4c4b74db9007b"
-  integrity sha512-CS+xBWEyXYVLBZ3dSY/MwlSXhz8er4JjkApazY84ft/++oOLsmkt6TaXBCsUFudum7QdoYmpxiL/gSp20+emkw==
+chartjs-adapter-date-fns@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/chartjs-adapter-date-fns/-/chartjs-adapter-date-fns-2.0.0.tgz#5e53b2f660b993698f936f509c86dddf9ed44c6b"
+  integrity sha512-rmZINGLe+9IiiEB0kb57vH3UugAtYw33anRiw5kS2Tu87agpetDDoouquycWc9pRsKtQo5j+vLsYHyr8etAvFw==
 
 chartjs-node-canvas@^4.1.6:
   version "4.1.6"
@@ -448,6 +448,11 @@ cross-spawn@^7.0.2:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
+
+date-fns@^2.29.1:
+  version "2.29.1"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.1.tgz#9667c2615525e552b5135a3116b95b1961456e60"
+  integrity sha512-dlLD5rKaKxpFdnjrs+5azHDFOPEu4ANy/LTh04A1DTzMM7qoajmKCBc8pkKRFT41CNzw+4gQh79X5C+Jq27HAw==
 
 debug@4, debug@4.x, debug@^4.1.1, debug@^4.3.2, debug@^4.3.4:
   version "4.3.4"
@@ -971,11 +976,6 @@ lunr@^2.3.9:
   version "2.3.9"
   resolved "https://registry.yarnpkg.com/lunr/-/lunr-2.3.9.tgz#18b123142832337dd6e964df1a5a7707b25d35e1"
   integrity sha512-zTU3DaZaF3Rt9rhN3uBMGQD3dD2/vFQqnvZCDv4dl5iOzq2IZQqTxu90r4E5J+nP70J3ilqVCrbho2eWaeW8Ow==
-
-luxon@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-3.0.1.tgz#6901111d10ad06fd267ad4e4128a84bef8a77299"
-  integrity sha512-hF3kv0e5gwHQZKz4wtm4c+inDtyc7elkanAsBq+fundaCdUBNJB1dHEGUZIM6SfSBUlbVFduPwEtNjFK8wLtcw==
 
 make-dir@^3.1.0:
   version "3.1.0"

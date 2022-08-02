@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const Graph = require("../dist/src/Graph");
 const StatsManager = require("../dist/src/StatsManager");
+const { DoughnutGraph } = require("../dist/index");
 
 // new Graph("line").generateLine();
 
@@ -20,6 +21,8 @@ const statsManager = new StatsManager({
 	}
 });
 
+new DoughnutGraph(statsManager, {});
+
 // When the client is ready, run this code (only once)
 client.once("ready", () => {
 	// eslint-disable-next-line no-undef
@@ -34,3 +37,4 @@ client.on("message", async message => {
 
 // Login to Discord with your client's token
 client.login(token);
+

@@ -2,7 +2,20 @@
 	"name": "discord-bot-stats",
 	"version": "1.0.0",
 	"description": "A Node.js package to have statistics graphs for your Discord Bot",
-	"main": "src/index.ts",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist/"
+	],
+	"module": "dist/index.mjs",
+	"exports": {
+		".": {
+			"require": "./dist/index.js",
+			"import": "./dist/index.mjs"
+		},
+		"./src/*": "./dist/*",
+		"./dist/*": "./dist/*"
+	},
 	"scripts": {
 		"test": "tsc --noEmit",
 		"compile": "tsc",
@@ -32,9 +45,9 @@
 	},
 	"dependencies": {
 		"chart.js": "^3.8.2",
-		"chartjs-adapter-luxon": "^1.1.0",
+		"chartjs-adapter-date-fns": "^2.0.0",
 		"chartjs-node-canvas": "^4.1.6",
-		"luxon": "^3.0.1",
+		"date-fns": "^2.29.1",
 		"mongoose": "^6.5.0",
 		"node-cron": "^3.0.1",
 		"uuid": "^8.3.2"

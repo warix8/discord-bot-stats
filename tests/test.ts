@@ -4,7 +4,7 @@
 
 // Require the necessary discord.js classes
 import { Client, GatewayIntentBits } from "discord.js";
-import Graph from "../src/Graph";
+import BarGraph from "../src/graphs/BarGraph";
 import { token } from "./config.json";
 import MongoStatsManager from "./MongoStatsManager";
 
@@ -26,7 +26,13 @@ const statsManager = new MongoStatsManager({
 client.once("ready", () => {
 	console.log("Ready!");
 	statsManager.start(async () => {
-		const cmds = new Map().set("ping", Math.floor(Math.random() * 12)).set("stats", Math.floor(Math.random() * 12)).set("lmao", Math.floor(Math.random() * 12)).set("trala", Math.floor(Math.random() * 12)).set("xxx", Math.floor(Math.random() * 12)).set("pitttng", Math.floor(Math.random() * 12));
+		const cmds = new Map()
+			.set("ping", Math.floor(Math.random() * 12))
+			.set("stats", Math.floor(Math.random() * 12))
+			.set("lmao", Math.floor(Math.random() * 12))
+			.set("trala", Math.floor(Math.random() * 12))
+			.set("xxx", Math.floor(Math.random() * 12))
+			.set("pitttng", Math.floor(Math.random() * 12));
 		return {
 			timestamp: Date.now(),
 			stats: {
@@ -44,7 +50,7 @@ client.on("messageCreate", async message => {
 	if (message.author.bot) return;
 	console.log(message.content);
 	if (message.content.startsWith("+stats")) {
-		const graph = await new Graph(statsManager).generate("commands");
+		const graph = await new BarGraph(statsManager).generate("commands");
 		await message.channel.send({
 			files: [
 				{

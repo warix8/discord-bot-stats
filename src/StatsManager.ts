@@ -1,40 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { schedule } from "node-cron";
-import StatsModule, { GraphType } from "./StatsModule";
-
-export type PossibleStats = "cpu" | "ram" | "servers" | "users" | "commands" | "errors";
-
-type EnabledStats = {
-	[key in PossibleStats]?: boolean;
-};
-
-/*export interface Stats {
-	timestamp?: number;
-	cpu?: number;
-	ram?: number;
-	servers?: number;
-	users?: number;
-	commands?: Map<string, CommandInformation>;
-	errors?: number;
-}*/
-
-export type Stats = {
-	[key: string]: number | Map<string, unknown>;
-};
-
-export interface SavedStatsFormat {
-	timestamp: number;
-	stats: Stats;
-}
-
-export interface StatsManagerOptions {
-	saveInterval?: number;
-	enabledStats?: EnabledStats;
-}
-
-interface StatsAcquisition {
-	(): Promise<SavedStatsFormat>;
-}
+import StatsModule from "./StatsModule";
+import { GraphType, EnabledStats, StatsManagerOptions, PossibleStats, StatsAcquisition, SavedStatsFormat } from "./types/types";
 
 const defaultStatsModule: StatsModule[] = [
 	new StatsModule("cpu", { graphType: GraphType.LINE, dataType: "number" }),
@@ -46,15 +13,20 @@ const defaultStatsModule: StatsModule[] = [
 ];
 
 /**
- * Manages the stats of your discord bot.
- * @param {options} StatsManagerOptions The client to manage the stats of.
- * @returns {StatsManager} The stats manager.
+ * Creates a new StatsManager instance
+ * @class StatsManager
+ * @description Manages the stats of the bot.
  */
-
-export default abstract class {
+export default abstract class StatsManager {
 	saveInterval: number;
 	enabledStats: EnabledStats;
 	private _statsModules: StatsModule[];
+	/**
+	 * Manages the stats of your discord bot.
+	 * @param {StatsManagerOptions} options - The options for the stats manager.
+	 * @param {number} [options.saveInterval = 3_600_000] - The interval in milliseconds default 1 hour.
+	 * @param {EnabledStats} [options.enabledStats = {}] - The enabled stats.
+	 */
 	constructor(options: StatsManagerOptions) {
 		this.saveInterval = options.saveInterval || 3_600_000;
 		this.enabledStats = options.enabledStats || {};
@@ -62,7 +34,12 @@ export default abstract class {
 		this._init();
 	}
 
-	_init() {
+	/**
+	 * Initializes the stats manager.
+	 * @private
+	 * @returns {void}
+	 */
+	_init(): void {
 		for (const module of defaultStatsModule) {
 			const status = this.enabledStats[module.name as PossibleStats];
 			if (status) this._statsModules.push(module);
@@ -70,18 +47,28 @@ export default abstract class {
 		console.log(`[StatsManager] Enabled stats: ${this._statsModules.map(m => m.name).join(", ")}`);
 	}
 
-	/*isModuleEnabled(name: string) {
-		return this.statsModules.some(m => m.name === name);
-	}*/
-
+	/**
+	 * Returns the enabled stats modules.
+	 * @returns {StatsModule}
+	 */
 	get statsModules(): StatsModule[] {
 		return this._statsModules;
 	}
 
+	/**
+	 * Returns the targetted stats module.
+	 * @param {string} name - The name of the stats module.
+	 * @returns {StatsModule|undefined}
+	 */
 	findModule(name: string): StatsModule {
 		return this._statsModules.find(m => m.name === name);
 	}
 
+	/**
+	 * Acquires the stats.
+	 * @param {StatsAcquisition} returnedStatsFunction - The function that returns the stats.
+	 * @returns {Promise<void>}
+	 */
 	async start(returnedStatsFunction: StatsAcquisition): Promise<void> {
 		schedule("*/15 * * * * *", async () => {
 			const returnedStats = await returnedStatsFunction();
@@ -151,10 +138,25 @@ export default abstract class {
 		});
 	}
 
+	/**
+	 * Saves the stats.
+	 * @abstract
+	 * @param {SavedStatsFormat} stats - The stats to save.
+	 */
 	abstract saveStats(stats: SavedStatsFormat): Promise<void>;
 
+	/**
+	 * Gets the stats.
+	 * @abstract
+	 * @returns {Promise<SavedStatsFormat[]>}
+	 */
 	abstract getStats(): Promise<SavedStatsFormat[]>;
 
+	/**
+	 * Deletes the stats.
+	 * @abstract
+	 * @param {number[]} timestamps - The timestamps of the stats to delete.
+	 */
 	abstract deleteStats(timestamps: number[]): Promise<void>;
 }
 

@@ -1,5 +1,6 @@
-import StatsManager, { SavedStatsFormat, StatsManagerOptions } from "../src/StatsManager";
+import StatsManager from "../src/StatsManager";
 import mongoose from "mongoose";
+import { SavedStatsFormat, StatsManagerOptions } from "../src/types/types";
 
 const StatsSchema = new mongoose.Schema({
 	timestamp: Number,

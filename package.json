@@ -18,7 +18,7 @@
 	},
 	"scripts": {
 		"test": "tsc --noEmit",
-		"compile": "tsc",
+		"build": "tsc",
 		"watch": "tsc --watch",
 		"lint": "eslint . --ext .ts",
 		"prettier": "prettier --check **/*.ts",

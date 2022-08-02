@@ -1,0 +1,39 @@
+name: Publish dev
+on:
+    push:
+        branches-ignore: []
+    pull_request:
+        branches: [main]
+
+jobs:
+    npm:
+        name: NPM Dev Publish
+        runs-on: ubuntu-latest
+        steps:
+            ##########################
+            # Checkout the code base #
+            ##########################
+            - name: Checkout Code
+              uses: actions/checkout@v3
+              with:
+                  # Full git history is needed to get a proper list of changed files within `super-linter`
+                  fetch-depth: 0
+                  ref: main
+
+            - name: Install node.js v16
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+                  registry-url: https://registry.npmjs.org/
+                  cache: "yarn"
+
+            - name: Install dependencies
+              run: yarn --immutable
+
+            - name: Publish
+              run: |
+                  yarn build 
+                  yarn version --no-git-tag-version $(jq --raw-output '.version' package.json)-dev.$(date +%s).$(git rev-parse --short HEAD)
+                  yarn publish --tag dev || true
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

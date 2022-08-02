@@ -3,4 +3,5 @@ tsconfig.json
 .prettierrc
 .eslintrc.json
 .eslintignore
-test
+tests
+.github

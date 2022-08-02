@@ -24,8 +24,9 @@ jobs:
             - name: Install node.js v16
               uses: actions/setup-node@v3
               with:
-                  node-version: 16
+                  node-version: 16.x
                   registry-url: https://registry.npmjs.org/
+                  always-auth: true
                   cache: "yarn"
 
             - name: Install dependencies

@@ -1,7 +1,8 @@
 name: Publish dev
 on:
     push:
-        branches-ignore: []
+        branches:
+            - main
     pull_request:
         branches: [main]
 
@@ -33,7 +34,7 @@ jobs:
             - name: Publish
               run: |
                   yarn build 
-                  yarn version --no-git-tag-version $(jq --raw-output '.version' package.json)-dev.$(date +%s).$(git rev-parse --short HEAD)
+                  yarn version --no-git-tag-version --new-version $(jq --raw-output '.version' package.json)-dev.$(date +%s).$(git rev-parse --short HEAD)
                   yarn publish --tag dev || true
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

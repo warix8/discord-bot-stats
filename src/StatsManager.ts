@@ -1,7 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { schedule } from "node-cron";
 import StatsModule from "./StatsModule";
-import { GraphType, EnabledStats, StatsManagerOptions, PossibleStats, StatsAcquisition, SavedStatsFormat } from "./types/types";
+import {
+	GraphType,
+	EnabledStats,
+	StatsManagerOptions,
+	PossibleStats,
+	StatsAcquisition,
+	SavedStatsFormat
+} from "./types/types";
 
 const defaultStatsModule: StatsModule[] = [
 	new StatsModule("cpu", { graphType: GraphType.LINE, dataType: "number" }),

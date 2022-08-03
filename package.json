@@ -32,6 +32,10 @@
 	"author": "Warix <39554785+warix8@users.noreply.github.com>",
 	"license": "MIT",
 	"devDependencies": {
+		"@babel/core": "^7.18.10",
+		"@babel/preset-env": "^7.18.10",
+		"@babel/preset-typescript": "^7.18.6",
+		"@devsnowflake/docgen": "devsnowflake/docgen#ts-patch",
 		"@types/node": "^18.6.2",
 		"@types/node-cron": "^3.0.2",
 		"@typescript-eslint/eslint-plugin": "^5.31.0",
@@ -40,21 +44,17 @@
 		"eslint": "^8.21.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-tsdoc": "^0.2.16",
+		"jsdoc-babel": "^0.5.0",
 		"prettier": "^2.7.1",
 		"typedoc": "^0.23.9",
 		"typedoc-plugin-missing-exports": "^0.23.0",
 		"typescript": "^4.7.4"
 	},
 	"dependencies": {
-		"@babel/core": "^7.18.10",
-		"@babel/preset-env": "^7.18.10",
-		"@babel/preset-typescript": "^7.18.6",
-		"@devsnowflake/docgen": "devsnowflake/docgen#ts-patch",
 		"chart.js": "^3.8.2",
 		"chartjs-adapter-date-fns": "^2.0.0",
 		"chartjs-node-canvas": "^4.1.6",
 		"date-fns": "^2.29.1",
-		"jsdoc-babel": "^0.5.0",
 		"mongoose": "^6.5.0",
 		"node-cron": "^3.0.1",
 		"uuid": "^8.3.2"

@@ -2,8 +2,6 @@ import { GraphType, StatsModuleOptions } from "./types/types";
 
 /**
  * Creates a StatsModule
- * @class StatsModule
- * @description Manages a single stats.
  */
 class StatsModule {
 	private _name: string;
@@ -23,8 +21,7 @@ class StatsModule {
 
 	/**
 	 * Gets the name of the module.
-	 * @returns {string}
-	 * @readonly
+	 * @type {string}
 	 */
 	get name(): string {
 		return this._name;
@@ -32,8 +29,7 @@ class StatsModule {
 
 	/**
 	 * Gets the graph type of the module.
-	 * @returns {GraphType}
-	 * @readonly
+	 * @type {GraphType}
 	 */
 	get graphType(): GraphType {
 		return this._graphType;
@@ -41,8 +37,7 @@ class StatsModule {
 
 	/**
 	 * Gets the data type of the module.
-	 * @returns {"number" | "map"}
-	 * @readonly
+	 * @type {"number" | "map"}
 	 */
 	get dataType(): "number" | "map" {
 		return this._dataType;

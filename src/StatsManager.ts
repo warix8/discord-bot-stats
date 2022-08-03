@@ -21,8 +21,6 @@ const defaultStatsModule: StatsModule[] = [
 
 /**
  * Creates a new StatsManager instance
- * @class StatsManager
- * @description Manages the stats of the bot.
  */
 abstract class StatsManager {
 	saveInterval: number;
@@ -56,7 +54,7 @@ abstract class StatsManager {
 
 	/**
 	 * Returns the enabled stats modules.
-	 * @returns {StatsModule}
+	 * @type {StatsModule[]}
 	 */
 	get statsModules(): StatsModule[] {
 		return this._statsModules;

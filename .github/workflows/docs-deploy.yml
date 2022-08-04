@@ -1,15 +1,17 @@
 name: Publish Typedoc to Github Pages
 on:
-  push:
-    branches:
-      - main
-      - master
+    push:
+        branches:
+            - main
+            - master
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: TypeStrong/typedoc-action@v1
-        with:
-          args: --options typedoc.json 
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+    publish:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v3
+            - name: Github pages
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./docs

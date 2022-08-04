@@ -1,8 +1,8 @@
 name: Publish dev
 on:
-    workflow_dispatch:
-    schedule:
-        - cron: "0 */6 * * *"
+    push:
+        branches:
+            - main
 
 jobs:
     npm:
@@ -32,8 +32,16 @@ jobs:
 
             - name: Publish
               run: |
-                  yarn build 
-                  yarn version --no-git-tag-version --new-version $(jq --raw-output '.version' package.json)-dev.$(date +%s).$(git rev-parse --short HEAD)
-                  yarn publish --tag dev || true
+                  VERSION=${yarn info discord-bot-stats@dev dist-tags.dev}
+                  arrIN=(${VERSION//./})
+                  echo ${arrIN[4]}
+                  if [ ${arrIN[4]} == ${git rev-parse --short HEAD} ]; then
+                      echo "Already up to date"
+                  else
+                      echo "Publishing new dev version."
+                      yarn build
+                      yarn version --no-git-tag-version --new-version $(jq --raw-output '.version' package.json)-dev.$(date +%s).$(git rev-parse --short HEAD)
+                      yarn publish --tag dev || true
+                  fi
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

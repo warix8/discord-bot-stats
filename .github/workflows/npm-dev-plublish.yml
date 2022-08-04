@@ -37,10 +37,11 @@ jobs:
                   NEW_VERSION=$(jq --raw-output '.version' package.json)-dev.$(git rev-parse --short HEAD)
                   echo $VERSION
                   echo $NEW_VERSION
-                  if [ $VERSION = $NEW_VERSION ]; then
+                  if [ "$VERSION" = "$NEW_VERSION" ]; then
                       echo "Already up to date"
                   else
                       echo "Publishing new dev version."
+                      yarn npm-deprecate --name "*dev*" --package discord-bot-stats@dev --message "This is an old development version."
                       yarn build
                       yarn version --no-git-tag-version --new-version $(jq --raw-output '.version' package.json)-dev.$(git rev-parse --short HEAD)
                       yarn publish --tag dev || true

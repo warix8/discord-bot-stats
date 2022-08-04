@@ -2792,7 +2792,7 @@ marked@^0.7.0:
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.7.0.tgz#b64201f051d271b1edc10a04d1ae9b74bb8e5c0e"
   integrity sha512-c+yYdCZJQrsRjTPhUx7VKkApw9bwDkNbHUKo1ovgcfDjb2kc8rLuRbIFyXL5WOEUwzSSKo3IXpph2K6DqB/KZg==
 
-marked@^4.0.10, marked@^4.0.16:
+marked@^4.0.10, marked@^4.0.18:
   version "4.0.18"
   resolved "https://registry.yarnpkg.com/marked/-/marked-4.0.18.tgz#cd0ac54b2e5610cfb90e8fd46ccaa8292c9ed569"
   integrity sha512-wbLDJ7Zh0sqA0Vdg6aqlbT+yPxqLblpAZh1mK2+AO2twQkPywvvqQNfEPVwSSRjZ7dZcdeVBIAgiO7MMp3Dszw==
@@ -3803,12 +3803,12 @@ typedoc-plugin-missing-exports@^0.23.0:
   integrity sha512-9smahDSsFRno9ZwoEshQDuIYMHWGB1E6LUud5qMxR2wNZ0T4DlZz0QjoK3HzXtX34mUpTH0dYtt7NQUK4D6B6Q==
 
 typedoc@^0.23.9:
-  version "0.23.9"
-  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.23.9.tgz#fd94451abd039513ab4fda58208fa0e5631e080b"
-  integrity sha512-rvWci2KHwteVUufZjjtIy/4PIHiE66t4VW4Ob6pezV//GHZ9Px0CHE5iq032GZzKONJWnNb+EJsrQv32INRvxA==
+  version "0.23.10"
+  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.23.10.tgz#285d595a5f2e35ccdf6f38eba4dfe951d5bff461"
+  integrity sha512-03EUiu/ZuScUBMnY6p0lY+HTH8SwhzvRE3gImoemdPDWXPXlks83UGTx++lyquWeB1MTwm9D9Ca8RIjkK3AFfQ==
   dependencies:
     lunr "^2.3.9"
-    marked "^4.0.16"
+    marked "^4.0.18"
     minimatch "^5.1.0"
     shiki "^0.10.1"
 

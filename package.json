@@ -24,7 +24,7 @@
 		"prettier": "prettier --check **/*.ts",
 		"check": "yarn lint && yarn prettier && yarn test",
 		"format": "prettier --write **/*.ts",
-		"typedoc": "typedoc --entryPointStrategy packages .",
+		"typedoc": "typedoc --options typedoc.json",
 		"docs": "docgen --jsdoc jsdoc.json --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
 		"testcode": "tsc && node dist/tests/test.js"
 	},
@@ -36,6 +36,7 @@
 		"@babel/preset-env": "^7.18.10",
 		"@babel/preset-typescript": "^7.18.6",
 		"@devsnowflake/docgen": "devsnowflake/docgen#ts-patch",
+		"@knodes/typedoc-plugin-pages": "^0.23.1",
 		"@types/node": "^18.6.2",
 		"@types/node-cron": "^3.0.2",
 		"@typescript-eslint/eslint-plugin": "^5.31.0",

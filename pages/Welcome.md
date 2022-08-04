@@ -1,8 +1,8 @@
-## Discord-bot-stats
+# Discord-bot-stats
 
 Discord-bot-stats is a cool Node.js package to have statistics graphs for your Discord Bot.
 
-# Installation
+## Installation
 
 ```bash
 npm install discord-bot-stats
@@ -10,7 +10,7 @@ OR
 yarn add discord-bot-stats
 ```
 
-# Example Usage With MongoDB in typescript
+## Example Usage With MongoDB in typescript
 
 ```bash
 npm i mongoose

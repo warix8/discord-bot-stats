@@ -1,0 +1,14 @@
+{
+	"name": "discord-bot-stats",
+	"entryPoints": ["src/index.ts"],
+	"out": "docs",
+	"pluginPages": {
+		"pages": [
+			{
+				"title": "General",
+				"source": "Welcome.md",
+				"children": []
+			}
+		]
+	}
+}

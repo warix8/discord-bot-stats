@@ -33,9 +33,9 @@ jobs:
             - name: Publish
               run: |
                   #! /bin/bash
-                  VERSION=${yarn info discord-bot-stats@dev dist-tags.dev}
-                  echo ${VERSION}
-                  if [ ${VERSION} == $(jq --raw-output '.version' package.json)-dev.$(git rev-parse --short HEAD) ]; then
+                  VERSION=$(yarn info discord-bot-stats@dev dist-tags.dev)
+                  echo $(VERSION)
+                  if [ $(VERSION) == $(jq --raw-output '.version' package.json)-dev.$(git rev-parse --short HEAD) ]; then
                       echo "Already up to date"
                   else
                       echo "Publishing new dev version."

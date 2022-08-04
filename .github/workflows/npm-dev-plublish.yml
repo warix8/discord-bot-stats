@@ -34,14 +34,13 @@ jobs:
               run: |
                   #! /bin/bash
                   VERSION=${yarn info discord-bot-stats@dev dist-tags.dev}
-                  arrIN=(${VERSION//./})
-                  echo ${arrIN[4]}
-                  if [ ${arrIN[4]} == ${git rev-parse --short HEAD} ]; then
+                  echo ${VERSION}
+                  if [ ${VERSION} == $(jq --raw-output '.version' package.json)-dev.$(git rev-parse --short HEAD) ]; then
                       echo "Already up to date"
                   else
                       echo "Publishing new dev version."
                       yarn build
-                      yarn version --no-git-tag-version --new-version $(jq --raw-output '.version' package.json)-dev.$(date +%s).$(git rev-parse --short HEAD)
+                      yarn version --no-git-tag-version --new-version $(jq --raw-output '.version' package.json)-dev.$(git rev-parse --short HEAD)
                       yarn publish --tag dev || true
                   fi
               env:

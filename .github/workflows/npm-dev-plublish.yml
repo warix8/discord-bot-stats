@@ -32,6 +32,7 @@ jobs:
 
             - name: Publish
               run: |
+                  #! /bin/bash
                   VERSION=${yarn info discord-bot-stats@dev dist-tags.dev}
                   arrIN=(${VERSION//./})
                   echo ${arrIN[4]}

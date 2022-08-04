@@ -28,6 +28,7 @@
 		"docs": "docgen --jsdoc jsdoc.json --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
 		"testcode": "tsc && node dist/tests/test.js"
 	},
+	"homepage": "https://warix8.github.io/discord-bot-stats/pages/Welcome/index.html",
 	"repository": "https://github.com/warix8/discord-bot-stats.git",
 	"author": "Warix <39554785+warix8@users.noreply.github.com>",
 	"license": "MIT",
@@ -59,5 +60,25 @@
 		"mongoose": "^6.5.0",
 		"node-cron": "^3.0.1",
 		"uuid": "^8.3.2"
-	}
+	},
+	"keywords": [
+		"discord",
+		"bot",
+		"stats",
+		"statistics",
+		"graph",
+		"chart",
+		"chartjs",
+		"node",
+		"js",
+		"javascript",
+		"typescript",
+		"ts",
+		"discordjs",
+		"discord.js",
+		"discord-bot",
+		"discord-stats",
+		"bot-stats",
+		"discord-bot-stats"
+	]
 }

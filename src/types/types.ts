@@ -10,7 +10,7 @@ export enum GraphType {
 	DOUGHNUT = "doughnut"
 }
 
-export type PossibleStats = "cpu" | "ram" | "servers" | "users" | "commands" | "errors";
+export type PossibleStats = "cpu" | "ram" | "servers" | "users" | "shards" | "commands" | "errors";
 
 export type EnabledStats = {
 	[key in PossibleStats]?: boolean;
@@ -26,7 +26,8 @@ export interface SavedStatsFormat {
 }
 
 export interface StatsManagerOptions {
-	saveInterval?: number;
+	scheduleCron?: string;
+	debuggingMode?: boolean;
 	enabledStats?: EnabledStats;
 }
 

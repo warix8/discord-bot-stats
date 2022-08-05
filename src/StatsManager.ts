@@ -15,6 +15,7 @@ const defaultStatsModule: StatsModule[] = [
 	new StatsModule("ram", { graphType: GraphType.LINE, dataType: "number" }),
 	new StatsModule("servers", { graphType: GraphType.LINE, dataType: "number" }),
 	new StatsModule("users", { graphType: GraphType.LINE, dataType: "number" }),
+	new StatsModule("shards", { graphType: GraphType.LINE, dataType: "number" }),
 	new StatsModule("commands", { graphType: GraphType.BAR, dataType: "map" }),
 	new StatsModule("errors", { graphType: GraphType.LINE, dataType: "number" })
 ];
@@ -23,19 +24,21 @@ const defaultStatsModule: StatsModule[] = [
  * Creates a new StatsManager instance
  */
 abstract class StatsManager {
-	saveInterval: number;
+	scheduleCron: string;
 	enabledStats: EnabledStats;
+	debuggingMode: boolean;
 	private _statsModules: StatsModule[];
 	/**
 	 * Manages the stats of your discord bot.
 	 * @param {StatsManagerOptions} options - The options for the stats manager.
-	 * @param {number} [options.saveInterval = 3_600_000] - The interval in milliseconds default 1 hour.
+	 * @param {string} [options.scheduleCron = "0 0 * * * *"] - The interval in milliseconds default 1 hour. See https://crontab.guru/#0_*_*_*_* and https://www.npmjs.com/package/node-cron for more info .
 	 * @param {EnabledStats} [options.enabledStats = {}] - The enabled stats.
 	 */
 	constructor(options: StatsManagerOptions) {
-		this.saveInterval = options.saveInterval || 3_600_000;
+		this.scheduleCron = options.scheduleCron || "0 0 * * * *";
 		this.enabledStats = options.enabledStats || {};
 		this._statsModules = [];
+		this.debuggingMode = options.debuggingMode || false;
 		this._init();
 	}
 
@@ -49,7 +52,8 @@ abstract class StatsManager {
 			const status = this.enabledStats[module.name as PossibleStats];
 			if (status) this._statsModules.push(module);
 		}
-		console.log(`[StatsManager] Enabled stats: ${this._statsModules.map(m => m.name).join(", ")}`);
+		if (this.debuggingMode)
+			console.debug(`[StatsManager] Enabled stats: ${this._statsModules.map(m => m.name).join(", ")}`);
 	}
 
 	/**
@@ -70,15 +74,56 @@ abstract class StatsManager {
 	}
 
 	/**
+	 * Add custom module to your stats manager.
+	 * @param {StatsModule[]} modules - The stats module to add.
+	 * @returns {void}
+	 * @example
+	 * const customModule = new StatsModule("custom", { graphType: GraphType.LINE, dataType: "number" });
+	 * statsManager.addModule([customModule]);
+	 * statsManager.findModule("custom"); // => customModule
+	 * @throws {Error} If the module is already added.
+	 * @throws {Error} If the module has not a valid graph type.
+	 * @throws {Error} If the module has not a valid data type.
+	 */
+	addModules(modules: StatsModule[]): void {
+		if (modules?.length === 0) throw new Error("You must provid a non-empty array of modules.");
+		for (const module of modules) {
+			if (this.findModule(module.name)) throw new Error(`The module ${module.name} is already added.`);
+			if (!Object.values(GraphType).includes(module.graphType))
+				throw new Error(`The module ${module.name} has not a valid graph type.`);
+			if (["number", "map"].includes(module.dataType))
+				throw new Error(`The module ${module.name} has not a valid data type.`);
+			this._statsModules.push(module);
+		}
+	}
+
+	/**
 	 * Acquires the stats.
 	 * @param {StatsAcquisition} returnedStatsFunction - The function that returns the stats.
 	 * @returns {Promise<void>}
+	 * @example
+	 * statsManager.acquireStats(async () => {
+	 * 	return {
+	 * 		ram: Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100,
+	 * 		servers: client.guilds.size,
+	 * 		users: client.users.size,
+	 * }
+	 * });
+	 * @throws {Error} If the stats are not acquired.
+	 * @throws {Error} If the stats are not acquired in the correct format.
 	 */
 	async start(returnedStatsFunction: StatsAcquisition): Promise<void> {
-		schedule("*/15 * * * * *", async () => {
+		schedule(this.scheduleCron, async () => {
+			if (this.debuggingMode) console.debug("[StatsManager] Acquiring stats...");
+
 			const returnedStats = await returnedStatsFunction();
 
-			console.debug("Schedule");
+			if (this.debuggingMode) console.debug("[StatsManager] Acquired stats!", returnedStats);
+
+			if (!returnedStats.stats)
+				throw new Error(
+					"No stats found! Be sure that you provide a object with a stats property. Example: { stats: { ... } }"
+				);
 
 			if (isNaN(returnedStats?.timestamp)) returnedStats.timestamp = Date.now();
 
@@ -104,8 +149,9 @@ abstract class StatsManager {
 				}
 			}
 
-			console.debug("4");
+			if (this.debuggingMode) console.debug("[StatsManager] Saving stats...");
 			await this.saveStats(returnedStats);
+			if (this.debuggingMode) console.debug("[StatsManager] Saved stats!");
 
 			// Supress useless data
 			/*let count = -1;
@@ -139,7 +185,9 @@ abstract class StatsManager {
 				.filter(d => d.timestamp < Date.now() - 28 * 24 * 60 * 60 * 1000)
 				.map(d => d.timestamp);
 
+			if (this.debuggingMode) console.debug("[StatsManager] Deleting old stats...", oldData);
 			await this.deleteStats(oldData);
+			if (this.debuggingMode) console.debug("[StatsManager] Deleted old stats!");
 		});
 	}
 

@@ -1,8 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const Graph = require("../dist/src/Graph");
-const StatsManager = require("../dist/src/StatsManager");
-const { DoughnutGraph } = require("../dist/index");
+const { StatsManager, DoughnutGraph } = require("../dist/index");
 
 // new Graph("line").generateLine();
 
@@ -37,4 +35,3 @@ client.on("message", async message => {
 
 // Login to Discord with your client's token
 client.login(token);
-

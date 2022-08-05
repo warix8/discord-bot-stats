@@ -31,7 +31,7 @@ abstract class GraphBase {
 		this.height = options.height || 400;
 		this.width = options.width || 800;
 		this.color = options.color || "rgba(227, 227, 227, 0.9)";
-		this.time = options.time || 7 * 24 * 60 * 60 * 1000;
+		this.time = options.time || 604800000;
 		this.backgroundColor = options.backgroundColor || "rgba(40, 40, 40, 0.9)";
 
 		Chart.defaults.color = options.color || "rgba(227, 227, 227, 0.9)";
@@ -41,10 +41,24 @@ abstract class GraphBase {
 	/**
 	 * @param {string} targetStats - The name of the stats to display
 	 * @returns {Promise<Buffer>} - The graph buffer
+	 * @example
+	 * const graph = new LineGraph(statsmanager, "cpu", {
+	 * 	height: 400,
+	 * 	width: 800,
+	 * 	time: 604800000,
+	 * 	color: "rgba(227, 227, 227, 0.9)",
+	 * 	backgroundColor: "rgba(40, 40, 40, 0.9)",
+	 * 	fontSize: 14
+	 * });
+	 * const buffer = graph.generate("ram");
+	 * fs.writeFileSync("ram.png", buffer);
+	 * @throws {Error} - If there is no data found
+	 * @throws {Error} - If the graph type is not supported
 	 */
 	async generate(targetStats: string): Promise<Buffer> {
 		const data = await this.statsmanager.getStats();
-		if (data.length === 0) throw new Error("No data");
+		if (this.statsmanager.debuggingMode) console.debug(`[GraphBase] Acquired ${data.length} stats`);
+		if (data.length === 0) throw new Error("No data was found");
 
 		const module: StatsModule = this.statsmanager.findModule(targetStats);
 

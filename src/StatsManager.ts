@@ -91,7 +91,7 @@ abstract class StatsManager {
 			if (this.findModule(module.name)) throw new Error(`The module ${module.name} is already added.`);
 			if (!Object.values(GraphType).includes(module.graphType))
 				throw new Error(`The module ${module.name} has not a valid graph type.`);
-			if (["number", "map"].includes(module.dataType))
+			if (!["number", "map"].includes(module.dataType))
 				throw new Error(`The module ${module.name} has not a valid data type.`);
 			this._statsModules.push(module);
 		}
@@ -102,7 +102,7 @@ abstract class StatsManager {
 	 * @param {StatsAcquisition} returnedStatsFunction - The function that returns the stats.
 	 * @returns {Promise<void>}
 	 * @example
-	 * statsManager.acquireStats(async () => {
+	 * statsManager.start(async () => {
 	 * 	return {
 	 * 		ram: Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100,
 	 * 		servers: client.guilds.size,

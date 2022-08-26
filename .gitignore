@@ -4,5 +4,5 @@ dist/
 package-lock.json
 yarn-error.log
 config.json
-dist/
 tests/config.json
+.idea

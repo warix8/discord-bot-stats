@@ -21,7 +21,7 @@ export type Stats = {
 };
 
 export interface SavedStatsFormat {
-	timestamp: number;
+	timestamp?: number;
 	stats: Stats;
 }
 

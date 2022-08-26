@@ -12,7 +12,7 @@ Discord-bot-stats is a cool Node.js package to have statistics graphs for your D
 
 ## Example results
 
-![Ram usage graph](https://github.com/warix8/discord-bot-stats/tree/main/tests/results/ramGraph.png?raw=true) ![Commands executions](https://github.com/warix8/discord-bot-stats/tree/main/tests/results/CommandsExecutions.png?raw=true)
+![Ram usage graph](https://github.com/warix8/discord-bot-stats/blob/main/tests/results/ramGraph.png?raw=true) ![Commands executions](https://github.com/warix8/discord-bot-stats/blob/main/tests/results/CommandsExecutions.png?raw=true)
 
 ## Documentation
 

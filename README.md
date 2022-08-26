@@ -1,6 +1,22 @@
 # Discord-bot-stats
 
+<div align="center">
+	<p>
+		<a href="https://www.npmjs.com/package/discord-bot-stats"><img src="https://img.shields.io/npm/v/discord-bot-stats.svg?maxAge=3600" alt="NPM Version" /></a>
+		<a href="https://www.npmjs.com/package/discord-bot-stats"><img src="https://img.shields.io/npm/dt/discord-bot-stats.svg?maxAge=3600" alt="NPM Downloads" /></a>
+		<a href="https://github.com/warix8/discord-bot-stats/actions"><img src="https://github.com/warix8/discord-bot-stats/actions/workflows/linter.yml/badge.svg" alt="Tests Status" /></a>
+	</p>
+</div>
+
 Discord-bot-stats is a cool Node.js package to have statistics graphs for your Discord Bot.
+
+## Example results
+
+![Ram usage graph](https://github.com/warix8/discord-bot-stats/tree/main/tests/results/ramGraph.png?raw=true) ![Commands executions](https://github.com/warix8/discord-bot-stats/tree/main/tests/results/CommandsExecutions.png?raw=true)
+
+## Documentation
+
+Here is the updated [documentation](https://warix8.github.io/discord-bot-stats/).
 
 ## Installation
 

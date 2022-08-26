@@ -79,7 +79,7 @@ abstract class StatsManager {
 	 * @returns {void}
 	 * @example
 	 * const customModule = new StatsModule("custom", { graphType: GraphType.LINE, dataType: "number" });
-	 * statsManager.addModule([customModule]);
+	 * statsManager.addModules([customModule]);
 	 * statsManager.findModule("custom"); // => customModule
 	 * @throws {Error} If the module is already added.
 	 * @throws {Error} If the module has not a valid graph type.

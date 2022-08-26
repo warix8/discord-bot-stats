@@ -50,12 +50,10 @@ class StatsModule {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	validInputData(data: any): boolean {
-		console.log(data, data instanceof Map);
+		//console.log(data, data instanceof Map);
 		if (this._dataType === "number" && isNaN(data)) {
 			return false;
-		} else if (this._dataType === "map" && !(data instanceof Map)) {
-			return false;
-		} else return true;
+		} else return !(this._dataType === "map" && !(data instanceof Map));
 	}
 }
 
